@@ -1,0 +1,46 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package echo;
+
+import java.io.*;
+import java.net.*;
+
+public class EchoClient
+{
+  public static void main(String[] args)
+	{
+	System.out.println("client is starting....");	
+        System.out.println("client establishing  connection...");
+        try
+		{
+			Socket s = new Socket("localhost", 9999);
+                        System.out.println("client connected to port 9999");
+			BufferedReader r = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			PrintWriter w = new PrintWriter(s.getOutputStream(), true);
+			BufferedReader con = new BufferedReader(new InputStreamReader(System.in));
+			String line;
+			do
+
+			{
+                          
+				line = r.readLine();
+				if ( line != null )
+					System.out.println(line);
+				line = con.readLine();
+
+				w.println(line);
+                                System.out.println("client: "+line);
+			}
+			while ( !line.trim().equals("bye") );
+                        System.out.println("client shutting down....");
+		}
+		catch (Exception err)
+		{
+			System.err.println(err);
+		}
+	}
+}
+
